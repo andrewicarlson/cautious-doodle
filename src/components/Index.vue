@@ -1,7 +1,16 @@
 <template>
   <div>
     <my-header></my-header>
-    <demo-description></demo-description>
+    <div class="container">
+      <md-layout :md-gutter="30">
+        <md-layout>
+          <demo-description></demo-description>
+        </md-layout>
+        <md-layout>
+          <demo-contents></demo-contents>
+        </md-layout>
+      </md-layout>
+    </div>
     <my-footer></my-footer>
   </div>
 </template>
@@ -10,6 +19,7 @@
 import MyHeader from './MyHeader';
 import MyFooter from './MyFooter';
 import DemoDescription from './DemoDescription';
+import DemoContents from './DemoContents';
 
 export default {
   name: 'index',
@@ -17,6 +27,7 @@ export default {
     MyHeader,
     MyFooter,
     DemoDescription,
+    DemoContents,
   },
 };
 </script>

@@ -14,3 +14,16 @@ export default {
   },
 };
 </script>
+
+<style>
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 90%;
+}
+
+.padding--standard {
+
+  padding: 6px;
+}
+</style>

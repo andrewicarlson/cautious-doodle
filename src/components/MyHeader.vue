@@ -1,6 +1,6 @@
 <template>
   <header>
-    test
+    <h1 class="md-display-3">Display 3</h1>
   </header>
 </template>
 
