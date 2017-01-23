@@ -24,6 +24,6 @@ export default {
 
 .padding--standard {
 
-  padding: 6px;
+  padding: 8px;
 }
 </style>
