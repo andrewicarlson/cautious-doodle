@@ -9,3 +9,15 @@ export default {
   name: 'my-footer',
 };
 </script>
+
+<style scoped>
+footer {
+
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 0;
+  margin-top: 100px;
+  text-align: center;
+}
+</style>
