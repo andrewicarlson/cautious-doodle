@@ -41,6 +41,7 @@
 
 <script>
 
+import axios from 'axios';
 import RequestCard from './RequestCard';
 
 export default {
@@ -58,12 +59,24 @@ export default {
   },
   methods: {
     startRequest: function startRequest() {
+      axios.get('https://google.com')
+      .then((response) => {
+        console.log('response', response);
+      })
+      .catch((response) => {
+        console.log('error', response);
+      });
       this.inProgress = true;
       this.showRequest = true;
-      // this.showExpression = true;
-      // this.showInsertion = true;
+      this.showExpression = true;
+      this.showInsertion = true;
     },
-
+    resetRequest: function resetRequest() {
+      this.inProgress = false;
+      this.showRequest = false;
+      this.showExpression = false;
+      this.showInsertion = false;
+    },
   },
 };
 </script>

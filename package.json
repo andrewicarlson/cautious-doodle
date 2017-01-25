@@ -13,9 +13,9 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "axios": "0.15.3",
     "vue": "^2.1.0",
-    "vue-material": "0.6.3",
-    "vue-resource": "1.0.3"
+    "vue-material": "0.6.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
