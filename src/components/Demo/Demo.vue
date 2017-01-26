@@ -44,6 +44,8 @@
 import axios from 'axios';
 import RequestCard from './RequestCard';
 
+const AWS = require('../../../config/aws.js');
+
 export default {
   name: 'demo',
   components: {
@@ -59,6 +61,7 @@ export default {
   },
   methods: {
     startRequest: function startRequest() {
+      console.log(AWS);
       axios.get('https://google.com')
       .then((response) => {
         console.log('response', response);
