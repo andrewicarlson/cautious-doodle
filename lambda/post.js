@@ -20,6 +20,7 @@ docClient = new AWS.DynamoDB.DocumentClient();
 
 var params = {
     TableName: table,
+    ConsistentRead: true,
     Item: {
         "id": indexValue,
         "created_at": createdAt
