@@ -12,13 +12,17 @@
             <h3 class="md-headline">Steps</h3>
             <ol>
               <li>'Make Request' button is pressed.</li>
-              <li>GET request is sent to an endpoint on Amazon API Gateway.</li>
+              <li>POST request is sent to an endpoint on Amazon API Gateway.</li>
               <li>The API Gateway routes the request to a Lambda expression.</li>
               <li>The Lambda expression inserts a record into DynamoDB.</li>
-              <li>The insertion stream is read from DynamoDB and the result is displayed in the cards to the right.</li>
+              <li>DynamoDB is polled for changes to verify that the record was inserted.</li>
+            </ol>
+            <h3 class="md-headline">Improvements (Todos)</h3>
+            <ol>
+              <li>Use Kinesis and Cloudtrail to stream events to a JS event consumption do avoid doing multiple requests to DynamoDB.</li>
             </ol>
           </div>
-          <md-button v-on:click="startRequest" class="md-raised md-primary">Make Request</md-button>
+          <md-button v-on:click="insertRecord" class="md-raised md-primary">Make Request</md-button>
         </section>
       </md-layout>
       <md-layout>
@@ -60,19 +64,27 @@ export default {
     };
   },
   methods: {
-    startRequest: function startRequest() {
-      console.log(AWS);
-      axios.get('https://google.com')
+    getRecords: function getRecords() {
+      axios.get(AWS.APIGatewayUrl)
       .then((response) => {
-        console.log('response', response);
+        console.log(response);
+        this.inProgress = false;
+      })
+      .catch((response) => {
+        console.log('get error', response);
+      });
+    },
+    insertRecord: function insertRecord() {
+      this.resetRequest();
+      this.inProgress = true;
+      this.showRequest = true;
+      axios.post(AWS.APIGatewayUrl)
+      .then(() => {
+        this.completeRequest();
       })
       .catch((response) => {
         console.log('error', response);
       });
-      this.inProgress = true;
-      this.showRequest = true;
-      this.showExpression = true;
-      this.showInsertion = true;
     },
     resetRequest: function resetRequest() {
       this.inProgress = false;
@@ -80,11 +92,19 @@ export default {
       this.showExpression = false;
       this.showInsertion = false;
     },
+    completeRequest: function completeRequest() {
+      this.showExpression = true;
+      this.showInsertion = true;
+      this.getRecords();
+    },
   },
 };
 </script>
 
 <style scoped>
+.md-card {
+  margin-bottom: 25px;
+}
 .card-stretch {
   width: 100%;
   display: block;
@@ -148,5 +168,10 @@ export default {
     height: 5em;
   }
 }
-
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0
+}
 </style>
