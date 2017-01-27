@@ -27,6 +27,11 @@
       </md-layout>
       <md-layout>
         <div class="card-stretch">
+          <pre>
+            <code v-for="record in dynamoRecords">
+              {{ record }}
+            </code>
+          </pre>
           <transition name="fade">
             <request-card v-if="showInsertion" title="Record inserted into DynamoDB"></request-card>
           </transition>
@@ -52,6 +57,9 @@ const AWS = require('../../../config/aws.js');
 
 export default {
   name: 'demo',
+  created: function created() {
+    this.getRecords();
+  },
   components: {
     RequestCard,
   },
@@ -61,14 +69,30 @@ export default {
       showExpression: false,
       showRequest: false,
       inProgress: false,
+      dynamoRecords: [],
     };
   },
   methods: {
+    processRecords: function processRecords(records) {
+      const len = records.length;
+      const processedRecords = [];
+      let i;
+
+      for (i = 0; i < len; i += 1) {
+        processedRecords.push({
+          created_at: new Date(records[i].created_at),
+          id: records[i].id,
+        });
+      }
+
+      this.dynamoRecords = processedRecords;
+      this.inProgress = false;
+    },
     getRecords: function getRecords() {
       axios.get(AWS.APIGatewayUrl)
       .then((response) => {
         console.log(response);
-        this.inProgress = false;
+        this.processRecords(response.data.Items);
       })
       .catch((response) => {
         console.log('get error', response);
