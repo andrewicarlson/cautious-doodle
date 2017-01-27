@@ -1,3 +1,8 @@
+/**
+NOTE: It is not best practice to store the IAM keys in Lambda expressions. It is
+only done here for the purposes of this POC.
+**/
+
 var AWS = require("aws-sdk");
 var docClient;
 
