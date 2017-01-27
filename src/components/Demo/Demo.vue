@@ -91,7 +91,6 @@ export default {
     getRecords: function getRecords() {
       axios.get(AWS.APIGatewayUrl)
       .then((response) => {
-        console.log(response);
         this.processRecords(response.data.Items);
       })
       .catch((response) => {
@@ -103,8 +102,7 @@ export default {
       this.inProgress = true;
       this.showRequest = true;
       axios.post(AWS.APIGatewayUrl)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         this.completeRequest();
       })
       .catch((response) => {
