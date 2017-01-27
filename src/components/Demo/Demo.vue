@@ -26,23 +26,23 @@
         </section>
       </md-layout>
       <md-layout>
-        <div class="card-stretch">
-          <pre>
-            <code v-for="record in dynamoRecords">
+        <section class="card-stretch">
+          <div class="padding--standard">
+            <p v-for="record in dynamoRecords">
               {{ record }}
-            </code>
-          </pre>
-          <transition name="fade">
-            <request-card v-if="showInsertion" title="Record inserted into DynamoDB"></request-card>
-          </transition>
-          <transition name="fade">
-            <request-card v-if="showExpression" title="Lambda expression triggered"></request-card>
-          </transition>
-          <transition name="fade">
-            <request-card v-if="showRequest" title="GET request made"></request-card>
-          </transition>
-          <div v-if="inProgress" class="loader">Loading...</div>
-        </div>
+            </p>
+            <transition name="fade">
+              <request-card v-if="showInsertion" title="Record inserted into DynamoDB"></request-card>
+            </transition>
+            <transition name="fade">
+              <request-card v-if="showExpression" title="Lambda expression triggered"></request-card>
+            </transition>
+            <transition name="fade">
+              <request-card v-if="showRequest" title="GET request made"></request-card>
+            </transition>
+            <div v-if="inProgress" class="loader">Loading...</div>
+          </div>
+        </section>
       </md-layout>
     </md-layout>
   </div>
@@ -103,7 +103,8 @@ export default {
       this.inProgress = true;
       this.showRequest = true;
       axios.post(AWS.APIGatewayUrl)
-      .then(() => {
+      .then((response) => {
+        console.log(response);
         this.completeRequest();
       })
       .catch((response) => {
