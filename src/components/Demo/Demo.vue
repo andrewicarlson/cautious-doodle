@@ -87,7 +87,7 @@ export default {
     },
     getRecords: function getRecords() {
       axios.get(AWS.APIGatewayUrl)
-      .then(() => {
+      .then((response) => {
         this.processRecords(response.data.Items);
       })
       .catch((response) => {
