@@ -17,10 +17,6 @@
               <li>The Lambda expression inserts a record into DynamoDB.</li>
               <li>DynamoDB is polled for changes to verify that the record was inserted.</li>
             </ol>
-            <h3 class="md-headline">Improvements (Todos)</h3>
-            <ol>
-              <li>Use Kinesis and Cloudtrail to stream events to a JS event consumption do avoid doing multiple requests to DynamoDB.</li>
-            </ol>
           </div>
           <md-button v-on:click="insertRecord" class="md-raised md-primary">Make Request</md-button>
         </section>
@@ -91,7 +87,7 @@ export default {
     },
     getRecords: function getRecords() {
       axios.get(AWS.APIGatewayUrl)
-      .then((response) => {
+      .then(() => {
         this.processRecords(response.data.Items);
       })
       .catch((response) => {
@@ -102,9 +98,8 @@ export default {
       this.resetRequest();
       this.inProgress = true;
       this.showRequest = true;
-      axios.post(AWS.APIGatewayUrl, { createdAt: Date.now() })
-      .then((response) => {
-        console.log(response);
+      axios.post(AWS.APIGatewayUrl, { created_at: Date.now() })
+      .then(() => {
         this.completeRequest();
       })
       .catch((response) => {
