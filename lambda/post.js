@@ -20,20 +20,22 @@ docClient = new AWS.DynamoDB.DocumentClient();
 
 var params = {
     TableName: table,
-    ConsistentRead: true,
+    ConditionExpression: "attribute_not_exists(created_at)",
     Item: {
-        "id": indexValue,
-        "created_at": createdAt
+        "id": "vue-demo"
     }
 };
 
 exports.handler = (event, context, callback) => {
 
+    params.Item.created_at = (event.created_at === undefined ? 'No-Date' : event.created_at);
+
     docClient.put(params, function(err, data) {
         if (err) {
-            callback(null, "Unable to add item.");
+            callback(null, "Unable to add item: " + err);
         } else {
-            callback(null, "Added item.");
+
+            callback(null, "Added item: " + JSON.stringify(data));
         }
     });
 };
