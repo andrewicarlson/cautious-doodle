@@ -74,6 +74,7 @@ export default {
   },
   methods: {
     processRecords: function processRecords(records) {
+      this.inProgress = true;
       const len = records.length;
       const processedRecords = [];
       let i;
@@ -101,8 +102,9 @@ export default {
       this.resetRequest();
       this.inProgress = true;
       this.showRequest = true;
-      axios.post(AWS.APIGatewayUrl)
-      .then(() => {
+      axios.post(AWS.APIGatewayUrl, { createdAt: Date.now() })
+      .then((response) => {
+        console.log(response);
         this.completeRequest();
       })
       .catch((response) => {

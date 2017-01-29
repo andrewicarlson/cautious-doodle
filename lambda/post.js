@@ -8,7 +8,7 @@ var docClient;
 
 const table = "{{ dynamo table name }}";
 const indexValue = "{{ primary index value (used to query) }}";
-const createdAt = Math.floor(Date.now());
+const createdAt = Date.now();
 const dynamoDBConfiguration = {
     "accessKeyId": "{{ access key id (IAM) }}",
     "secretAccessKey": "{{ secret access key (IAM) }}",
